@@ -30,13 +30,20 @@ Here's how the game should play out
 
 ## Enhancements
 
-- [ ] Generate a ball
-- [ ] Allow the ball to drop
-- [ ] Make the ball a random color
-- [ ] Make a ball go a random direction
-- [ ] Create buckets/columns for the ball to land in
-- [ ] Check if the ball landed in the right color bucket
+- [x] Generate a ball
+- [x] Allow the ball to drop
+- [x] Make the ball a random color
+- [x] Make a ball go a random direction
+- [x] Create buckets/columns for the ball to land in
+- [x] Check if the ball landed in the right color bucket
+
+### Stretch Enhancements
+
+- [ ] Add sounds
+- [ ] Add more colors
+- [ ] Make the background more interesting
 
 ## Bugs
 
 - [ ] I'm confident I'm not doing Defaults right in Lua
+- [ ] Reset after Game Over immediately drops ball
