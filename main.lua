@@ -8,6 +8,7 @@ function love.load()
 		direction = 1,
 		drop = false,
 	}
+	Speed = 3
 end
 
 function love.update(dt)
@@ -20,10 +21,11 @@ function love.update(dt)
 		ball.y = ball.y + ball.speed
 		if ball.y > 500 then
 			-- TODO: figure out how to setup defaults
+			Speed = Speed + 3
 			ball = {
 				x = 400,
 				y = 200,
-				speed = 3,
+				speed = Speed,
 				direction = 1,
 				drop = false,
 			}
