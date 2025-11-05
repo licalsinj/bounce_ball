@@ -15,6 +15,7 @@ function love.load()
 
 	-- Things that should reset to a default
 	Is_Game_Over = false
+	Is_Debounce = false
 	Score = 0
 	Speed = 1
 	Colors = {
@@ -33,27 +34,32 @@ end
 
 function love.update(dt)
 	Ball.x = Ball.x + (Ball.direction * Ball.speed)
-	if love.keyboard.isDown("space") then
-		if Is_Game_Over then
-			Is_Game_Over = false
-			Score = 0
-			Speed = 1
-			Colors = {
-				{ 255, 0, 0 },
-				{ 0, 0, 255 },
-			}
-			Ball = {
-				x = 350,
-				y = 50,
-				speed = Speed,
-				direction = Directions[love.math.random(2)],
-				drop = false,
-				color_index = love.math.random(1, #Colors),
-			}
-		elseif Is_Game_Over == false then
-			Ball.drop = true
-			Ball.direction = 0
-		end
+	-- This fixes the extra drop on restart but causes the ball to generate twice
+	if not love.keyboard.isDown("space") and Is_Debounce then
+		Is_Game_Over = false
+		Is_Debounce = false
+		return
+	end
+	if love.keyboard.isDown("space") and Is_Game_Over then
+		Is_Debounce = true
+		Score = 0
+		Speed = 1
+		Colors = {
+			{ 255, 0, 0 },
+			{ 0, 0, 255 },
+		}
+		Ball = {
+			x = 350,
+			y = 50,
+			speed = Speed,
+			direction = Directions[love.math.random(2)],
+			drop = false,
+			color_index = love.math.random(1, #Colors),
+		}
+		return
+	elseif love.keyboard.isDown("space") and Is_Game_Over == false then
+		Ball.drop = true
+		Ball.direction = 0
 	end
 	if Ball.drop then
 		Ball.y = Ball.y + FALL_SPEED
