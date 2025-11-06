@@ -34,29 +34,7 @@ end
 
 function love.update(dt)
 	Ball.x = Ball.x + (Ball.direction * Ball.speed)
-	if love.keyboard.isDown("space") and not Is_Game_Over then
-		Ball.drop = true
-		Ball.direction = 0
-	elseif love.keyboard.isDown("space") and Is_Game_Over then
-		Is_Game_Over = false
-		Score = 0
-		Speed = 1
-		Colors = {
-			{ 255, 0, 0 },
-			{ 0, 0, 255 },
-		}
-		Ball = {
-			x = 350,
-			y = 50,
-			speed = Speed,
-			direction = Directions[love.math.random(2)],
-			drop = false,
-			color_index = love.math.random(1, #Colors),
-		}
-		return
-	end
 	if Ball.drop then
-		print("debug!!")
 		Ball.y = Ball.y + FALL_SPEED
 		if Ball.y > (FRAME_HEIGHT - BALL_RADIUS) then
 			if Speed < MAX_SPEED then
@@ -85,7 +63,6 @@ function love.update(dt)
 					-- If it's wrong display a score
 					Ball.drop = false
 					Is_Game_Over = true
-					print(Score)
 				end
 			end
 		end
@@ -134,4 +111,30 @@ end
 -- tests if a point/ball is within the bucket/rect's width
 function test_ball_sort(point_x, point_r, rec_x, rec_w)
 	return point_x > (rec_x + point_r) and point_x < (rec_x + rec_w - point_r)
+end
+function love.keypressed(key)
+	print(key)
+	if key == "space" then
+		if Is_Game_Over then
+			-- reset ball
+			Is_Game_Over = false
+			Score = 0
+			Speed = 1
+			Colors = {
+				{ 255, 0, 0 },
+				{ 0, 0, 255 },
+			}
+			Ball = {
+				x = 350,
+				y = 50,
+				speed = Speed,
+				direction = Directions[love.math.random(2)],
+				drop = false,
+				color_index = love.math.random(1, #Colors),
+			}
+		else
+			Ball.drop = true
+			Ball.direction = 0
+		end
+	end
 end
