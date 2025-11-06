@@ -36,6 +36,7 @@ Here's how the game should play out
 - [x] Make a ball go a random direction
 - [x] Create buckets/columns for the ball to land in
 - [x] Check if the ball landed in the right color bucket
+- [ ] Add some useful comments
 
 ### Stretch Enhancements
 
@@ -46,4 +47,6 @@ Here's how the game should play out
 ## Bugs
 
 - [ ] I'm confident I'm not doing Defaults right in Lua
-- [ ] Reset after Game Over immediately drops ball
+- [x] Reset after Game Over immediately drops ball
+- [ ] When the ball drops close to the left edge you get a game over
+        even if it's the right color

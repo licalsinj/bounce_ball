@@ -3,12 +3,14 @@
 function love.load()
 	-- Global Constants
 	MAX_SPEED = 30
+	START_SPEED = 2
 	BALL_RADIUS = 20
 	FALL_SPEED = 20
 	BUCKET_HEIGHT = 80
 	-- TODO: Make these actually be used to create the screen
-	FRAME_WIDTH = 800
-	FRAME_HEIGHT = 600
+	FRAME_WIDTH = 1024
+	FRAME_HEIGHT = 1024
+	START_Y = 50
 
 	-- Global Variables
 	Directions = { -1, 1 }
@@ -17,14 +19,14 @@ function love.load()
 	Is_Game_Over = false
 	Is_Debounce = false
 	Score = 0
-	Speed = 1
+	Speed = START_SPEED
 	Colors = {
 		{ 255, 0, 0 },
 		{ 0, 0, 255 },
 	}
 	Ball = {
-		x = 350,
-		y = 50,
+		x = FRAME_WIDTH / 2,
+		y = START_Y,
 		speed = Speed,
 		direction = Directions[love.math.random(2)],
 		drop = false,
@@ -52,8 +54,8 @@ function love.update(dt)
 				if is_bucket_ball_match then
 					Score = Score + 1
 					Ball = {
-						x = 350,
-						y = 30,
+						x = FRAME_WIDTH / 2,
+						y = START_Y,
 						speed = Speed,
 						direction = Directions[love.math.random(2)],
 						drop = false,
@@ -68,7 +70,7 @@ function love.update(dt)
 		end
 	-- TODO: Make this a global setting when you figure out how to setup screen sizes
 	-- turn around point is width of screen - radius of ball
-	elseif (Ball.drop == false) and (Ball.x > (800 - BALL_RADIUS) or Ball.x < BALL_RADIUS) then
+	elseif (Ball.drop == false) and (Ball.x > (FRAME_WIDTH - BALL_RADIUS) or Ball.x < BALL_RADIUS) then
 		Ball.direction = Ball.direction * -1
 	end
 end
@@ -87,24 +89,6 @@ function love.draw()
 	love.graphics.printf("Score: " .. Score, FRAME_WIDTH / 2, 0, 50, "center")
 	if Is_Game_Over then
 		love.graphics.printf("GAME OVER!", FRAME_WIDTH / 2, FRAME_HEIGHT / 2 - 50, 50, "center")
-
-		-- TODO: Remove this after testing
-		-- print out some debug info in case I think I died unnecessarily
-		local bucket_width = FRAME_WIDTH / #Colors
-		local is_bucket_ball_match = ""
-		if test_ball_sort(Ball.x, BALL_RADIUS, bucket_width * (Ball.color_index - 1), bucket_width) then
-			is_bucket_ball_match = "true"
-		else
-			is_bucket_ball_match = "false"
-		end
-		love.graphics.setColor(255, 255, 255)
-		love.graphics.printf(
-			"debug: " .. Ball.x .. " " .. bucket_width * (Ball.color_index - 1) .. " " .. is_bucket_ball_match,
-			10,
-			10,
-			100,
-			"left"
-		)
 	end
 end
 
@@ -113,20 +97,19 @@ function test_ball_sort(point_x, point_r, rec_x, rec_w)
 	return point_x > (rec_x + point_r) and point_x < (rec_x + rec_w - point_r)
 end
 function love.keypressed(key)
-	print(key)
 	if key == "space" then
 		if Is_Game_Over then
 			-- reset ball
 			Is_Game_Over = false
 			Score = 0
-			Speed = 1
+			Speed = START_SPEED
 			Colors = {
 				{ 255, 0, 0 },
 				{ 0, 0, 255 },
 			}
 			Ball = {
-				x = 350,
-				y = 50,
+				x = FRAME_WIDTH / 2,
+				y = START_Y,
 				speed = Speed,
 				direction = Directions[love.math.random(2)],
 				drop = false,
