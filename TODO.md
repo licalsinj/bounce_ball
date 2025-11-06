@@ -36,19 +36,25 @@ Here's how the game should play out
 - [x] Make a ball go a random direction
 - [x] Create buckets/columns for the ball to land in
 - [x] Check if the ball landed in the right color bucket
-- [ ] Add some useful comments
-- [ ] Make a function that resets Ball
+- [x] Add some useful comments
+- [x] Make a function that resets Ball
 - [ ] Understand how to link screen size with constants
 
 ### Stretch Enhancements
 
-- [ ] Add sounds
 - [ ] Add more colors
+  - Got this started but it's not adding more than the 3rd one
+  - Should have it print out speed for debugging purposes
+- [ ] Add sounds
 - [ ] Make the background more interesting
+- [ ] Add Momentum to Falling
+- [ ] Add a pause button
 
 ## Bugs
 
-- [ ] I'm confident I'm not doing Defaults right in Lua
+- [x] I'm confident I'm not doing Defaults right in Lua
+  - I'm now using functions to reset, which is at least consistent
+      and not duplicating code
 - [x] Reset after Game Over immediately drops ball
 - [x] When the ball drops close to the edge you get a game over
         even if it's the right color
