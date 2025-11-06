@@ -37,6 +37,8 @@ Here's how the game should play out
 - [x] Create buckets/columns for the ball to land in
 - [x] Check if the ball landed in the right color bucket
 - [ ] Add some useful comments
+- [ ] Make a function that resets Ball
+- [ ] Understand how to link screen size with constants
 
 ### Stretch Enhancements
 
@@ -48,5 +50,6 @@ Here's how the game should play out
 
 - [ ] I'm confident I'm not doing Defaults right in Lua
 - [x] Reset after Game Over immediately drops ball
-- [ ] When the ball drops close to the left edge you get a game over
+- [x] When the ball drops close to the edge you get a game over
         even if it's the right color
+        - This was caused by the speed overshooting the edge of the frame

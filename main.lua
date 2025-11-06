@@ -1,49 +1,57 @@
 -- A simple one button game where you sort colored balls
 
+-- love.load Runs once on start up
 function love.load()
 	-- Global Constants
 	MAX_SPEED = 30
 	START_SPEED = 2
+	START_Y = 50
 	BALL_RADIUS = 20
 	FALL_SPEED = 20
 	BUCKET_HEIGHT = 80
 	-- TODO: Make these actually be used to create the screen
 	FRAME_WIDTH = 1024
 	FRAME_HEIGHT = 1024
-	START_Y = 50
 
 	-- Global Variables
 	Directions = { -1, 1 }
-
-	-- Things that should reset to a default
-	Is_Game_Over = false
-	Is_Debounce = false
-	Score = 0
-	Speed = START_SPEED
 	Colors = {
 		{ 255, 0, 0 },
 		{ 0, 0, 255 },
 	}
-	Ball = {
-		x = FRAME_WIDTH / 2,
-		y = START_Y,
-		speed = Speed,
-		direction = Directions[love.math.random(2)],
-		drop = false,
-		color_index = love.math.random(1, #Colors),
-	}
+	-- Things that should reset to a default
+	reset_game()
+	--[[ 
+  Is_Game_Over = false
+	Is_Debounce = false
+	Score = 0
+	Speed = START_SPEED
+	
+  ]]
+	--
+	Ball = reset_ball()
 end
 
 function love.update(dt)
+	print(Ball.x)
+	if Ball.x < BALL_RADIUS or Ball.x > FRAME_WIDTH - BALL_RADIUS then
+		Ball.drop = true
+		Ball.direction = 0
+	end
+	-- Move the ball based on the direction and speed
 	Ball.x = Ball.x + (Ball.direction * Ball.speed)
+	-- if your speed moved you past the edge reset it to the edge
+	if Ball.x < BALL_RADIUS then
+		Ball.x = BALL_RADIUS
+	elseif Ball.x > FRAME_WIDTH - BALL_RADIUS then
+		Ball.x = FRAME_WIDTH - BALL_RADIUS
+	end
+	-- Handle Ball Dropping/Falling
 	if Ball.drop then
 		Ball.y = Ball.y + FALL_SPEED
 		if Ball.y > (FRAME_HEIGHT - BALL_RADIUS) then
 			if Speed < MAX_SPEED then
 				Speed = Speed + 1
-			end
-			if Speed == MAX_SPEED / 2 and #Colors < 3 then
-				table.insert(Colors, { 0, 255, 0 })
 			end
 			-- Test to see if the ball fell in the right location
 			if Ball.y > BUCKET_HEIGHT + BALL_RADIUS * 2 then
@@ -53,24 +61,20 @@ function love.update(dt)
 				-- If it's right then generate a new ball and increase score
 				if is_bucket_ball_match then
 					Score = Score + 1
-					Ball = {
-						x = FRAME_WIDTH / 2,
-						y = START_Y,
-						speed = Speed,
-						direction = Directions[love.math.random(2)],
-						drop = false,
-						color_index = math.random(1, #Colors),
-					}
+					Ball = generate_ball()
 				else
 					-- If it's wrong display a score
 					Ball.drop = false
 					Is_Game_Over = true
 				end
 			end
+			if Speed == MAX_SPEED / 2 and #Colors < 3 then
+				table.insert(Colors, { 0, 255, 0 })
+			end
 		end
 	-- TODO: Make this a global setting when you figure out how to setup screen sizes
 	-- turn around point is width of screen - radius of ball
-	elseif (Ball.drop == false) and (Ball.x > (FRAME_WIDTH - BALL_RADIUS) or Ball.x < BALL_RADIUS) then
+	elseif (Ball.drop == false) and (Ball.x >= (FRAME_WIDTH - BALL_RADIUS) or Ball.x <= BALL_RADIUS) then
 		Ball.direction = Ball.direction * -1
 	end
 end
@@ -99,25 +103,43 @@ end
 function love.keypressed(key)
 	if key == "space" then
 		if Is_Game_Over then
-			-- reset ball
-			Is_Game_Over = false
-			Score = 0
-			Speed = START_SPEED
-			Colors = {
-				{ 255, 0, 0 },
-				{ 0, 0, 255 },
-			}
-			Ball = {
-				x = FRAME_WIDTH / 2,
-				y = START_Y,
-				speed = Speed,
-				direction = Directions[love.math.random(2)],
-				drop = false,
-				color_index = love.math.random(1, #Colors),
-			}
+			reset_game()
 		else
 			Ball.drop = true
 			Ball.direction = 0
 		end
 	end
+end
+
+function reset_game()
+	Is_Game_Over = false
+	Score = 0
+	Speed = START_SPEED
+	Colors = {
+		{ 255, 0, 0 },
+		{ 0, 0, 255 },
+	}
+	Ball = reset_ball()
+end
+
+function reset_ball()
+	return {
+		x = FRAME_WIDTH / 2,
+		y = START_Y,
+		speed = Speed,
+		direction = Directions[love.math.random(2)],
+		drop = false,
+		color_index = love.math.random(1, #Colors),
+	}
+end
+
+function generate_ball()
+	return {
+		x = FRAME_WIDTH / 2,
+		y = START_Y,
+		speed = Speed,
+		direction = Directions[love.math.random(2)],
+		drop = false,
+		color_index = math.random(1, #Colors),
+	}
 end
