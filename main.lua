@@ -25,6 +25,10 @@ function love.load()
 		{ 255, 0, 0 },
 		{ 0, 0, 255 },
 	}
+	Is_Paused = false
+	-- The speed of the ball at the time of pausing
+	Pause_Speed = 0
+	Pause_Drop = false
 	-- Things that should reset to a default
 	reset_game()
 	--[[ 
@@ -39,7 +43,11 @@ function love.load()
 end
 
 function love.update(dt)
+	-- Function to Auto Play the game for testing
 	auto_play()
+	-- Handle Pausing
+	if Is_Paused then
+	end
 	-- Move the ball based on the direction and speed
 	Ball.x = Ball.x + (Ball.direction * Ball.speed)
 	-- if your speed moved you past the edge reset it to the edge
@@ -71,9 +79,9 @@ function love.update(dt)
 				end
 				-- if we've gotten to half max speed add a color and reduce speed
 				-- TODO: Fix this. It's not adding in more than a 3rd color
-				if Speed == MAX_SPEED / 2 and #Colors < #ALL_COLORS then
+				if Speed >= MAX_SPEED / 2 and #Colors < #ALL_COLORS then
 					table.insert(Colors, ALL_COLORS[#Colors + 1])
-					Speed = Speed / 2
+					Speed = math.floor(Speed / 2)
 				end
 				-- generate a new ball to be sorted
 				Ball = generate_ball()
@@ -107,10 +115,15 @@ function love.draw()
 	-- draw the text on the screen
 	love.graphics.setColor(255, 255, 255)
 	love.graphics.printf("Score: " .. Score, FRAME_WIDTH / 2, 0, 50, "center")
+	love.graphics.printf("Speed: " .. Ball.speed, 0, 0, 70, "center")
 
 	-- if it's a game over then show that screen
+	if Is_Paused then
+		love.graphics.printf("PAUSED", FRAME_WIDTH / 2, FRAME_HEIGHT / 2, 50, "center")
+	end
+	-- if it's a game over then show that screen
 	if Is_Game_Over then
-		love.graphics.printf("GAME OVER!", FRAME_WIDTH / 2, FRAME_HEIGHT / 2 - 50, 50, "center")
+		love.graphics.printf("GAME OVER!", FRAME_WIDTH / 2, FRAME_HEIGHT / 2, 50, "center")
 	end
 end
 
@@ -121,12 +134,30 @@ end
 
 -- Love's built in callback function for keys
 function love.keypressed(key)
-	if key == "space" then
-		if Is_Game_Over then
-			reset_game()
+	-- Need to take into account if the game is paused
+	-- if it is then ignore everything but "escape"
+	if not Is_Paused then
+		if key == "space" then
+			if Is_Game_Over then
+				reset_game()
+			else
+				Ball.drop = true
+				Ball.direction = 0
+			end
+		end
+		-- Put other buttons here...
+		-- It's a one button game so there are no other buttons
+	end
+	if key == "escape" then
+		Is_Paused = not Is_Paused
+		if Is_Paused then
+			Pause_Speed = Ball.speed
+			Pause_Drop = Ball.drop
+			Ball.speed = 0
+			Ball.drop = false
 		else
-			Ball.drop = true
-			Ball.direction = 0
+			Ball.speed = Pause_Speed
+			Ball.drop = Pause_Drop
 		end
 	end
 end

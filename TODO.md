@@ -48,7 +48,7 @@ Here's how the game should play out
 - [ ] Add sounds
 - [ ] Make the background more interesting
 - [ ] Add Momentum to Falling
-- [ ] Add a pause button
+- [x] Add a pause button
 
 ## Bugs
 
