@@ -38,17 +38,25 @@ Here's how the game should play out
 - [x] Check if the ball landed in the right color bucket
 - [x] Add some useful comments
 - [x] Make a function that resets Ball
+- [x] Add a pause button
 - [ ] Understand how to link screen size with constants
+
+- [ ] Get New Buckets to appear in the center of the list
 
 ### Stretch Enhancements
 
 - [ ] Add more colors
-  - Got this started but it's not adding more than the 3rd one
-  - Should have it print out speed for debugging purposes
 - [ ] Add sounds
 - [ ] Make the background more interesting
 - [ ] Add Momentum to Falling
-- [x] Add a pause button
+- [ ] Enable it to work with a mouse
+  - Left click is drop unless you hit the pause button.
+- [ ] Store and save high scores
+- [ ] Make the point system more complex
+  - Like you lose points for bouncing off the walls or crossing boundaries unnecessarily?
+- [ ] Customize Colors and Sounds?
+- [ ] Splash Screen
+- [ ] Improve Game Over and Pause images
 
 ## Bugs
 
@@ -59,3 +67,26 @@ Here's how the game should play out
 - [x] When the ball drops close to the edge you get a game over
         even if it's the right color
         - This was caused by the speed overshooting the edge of the frame
+
+## Colors
+
+### Dark Mode
+
+- Dark Red - #B12732
+- Dark Orange - #B86829
+- Dark Yellow - #B8A928
+- Dark Green - #30B729
+- Dark Blue - #1C1B55
+- Dark Purple - #74248F
+
+### Light Mode
+
+- Light Red - #B3666C
+- Light Orange - #B88257
+- Light Yellow - #C0B769
+- Light Green - #50F047
+- Light Blue - #5856E6
+- Light Purple - #CD3AFF
+
+- Dark Grey - #424242
+- Light Grey - #CECECE

@@ -44,7 +44,7 @@ end
 
 function love.update(dt)
 	-- Function to Auto Play the game for testing
-	auto_play()
+	-- auto_play()
 	-- Handle Pausing
 	if Is_Paused then
 	end
