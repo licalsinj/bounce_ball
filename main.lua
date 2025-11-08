@@ -44,6 +44,20 @@ function love.load()
 	-- The speed of the ball at the time of pausing
 	Pause_Speed = 0
 	Pause_Drop = false
+	-- Which Add Order value I should be referencing
+	Add_Order_Index = 1
+	-- The order I want to add colors into the bucket range
+	-- It also happens to be where the color is in the ALL_COLORS list
+	-- The first number is the location in the building Colors list
+	-- The second number is the location in the ALL_COLORS list
+	-- So the color yellow needs to be inserted into position 2 in Colors
+	-- And the color yellow exists in position 3 of ALL_COLORS
+	Add_Order = {
+		{ 2, 3 },
+		{ 3, 4 },
+		{ 2, 2 },
+		{ 6, 6 },
+	}
 	-- Things that should reset to a default
 	reset_game()
 	--[[ 
@@ -92,7 +106,10 @@ function love.update(dt)
 				-- if we've gotten to half max speed add a color and reduce speed
 				-- TODO: Fix this. It's not adding in more than a 3rd color
 				if Speed >= MAX_SPEED / 2 and #Colors < #ALL_COLORS then
-					table.insert(Colors, ALL_COLORS[#Colors + 1])
+					-- table.insert(Colors, ALL_COLORS[#Colors + 1])
+					-- Insert the Color at index Add_Order[Add_Order_Index] into Colors
+					table.insert(Colors, Add_Order[Add_Order_Index][1], ALL_COLORS[Add_Order[Add_Order_Index][2]])
+					Add_Order_Index = Add_Order_Index + 1
 					Speed = math.floor(Speed / 2)
 				end
 				-- generate a new ball to be sorted
@@ -123,9 +140,7 @@ function love.draw()
 
 	-- draw the ball on the screen
 	love.graphics.setColor(Colors[Ball.color_index])
-	love.graphics.circle("fill", Ball.x, Ball.y, BALL_RADIUS)
-
-	-- draw the text on the screen
+	love.graphics.circle("fill", Ball.x, Ball.y, BALL_RADIUS) -- draw the text on the screen
 	love.graphics.setColor(TEXT_COLOR)
 	love.graphics.printf("Score: " .. Score, FRAME_WIDTH / 2, 0, 50, "center")
 	love.graphics.printf("Speed: " .. Ball.speed, 0, 0, 70, "center")
@@ -191,9 +206,10 @@ function reset_game()
 	Is_Game_Over = false
 	Score = 0
 	Speed = START_SPEED
+	Add_Order_Index = 1
 	Colors = {
 		ALL_COLORS[1],
-		ALL_COLORS[2],
+		ALL_COLORS[5],
 	}
 	Ball = reset_ball()
 end

@@ -39,8 +39,8 @@ Here's how the game should play out
 - [x] Add some useful comments
 - [x] Make a function that resets Ball
 - [x] Add a pause button
+- [x] Get New Buckets to appear in the center of the list
 - [ ] Understand how to link screen size with constants
-- [ ] Get New Buckets to appear in the center of the list
 
 ### Stretch Enhancements
 
@@ -56,6 +56,7 @@ Here's how the game should play out
 - [ ] Customize Colors and Sounds?
 - [ ] Splash Screen
 - [ ] Improve Game Over and Pause images
+- [ ] Menu Options
 
 ## Bugs
 
