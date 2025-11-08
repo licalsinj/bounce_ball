@@ -12,19 +12,34 @@ function love.load()
 	-- TODO: Make these actually be used to create the screen
 	FRAME_WIDTH = 1024
 	FRAME_HEIGHT = 1024
-	ALL_COLORS = {
-		{ 255, 0, 0 },
-		{ 0, 0, 255 },
-		{ 0, 255, 0 },
-		{ 0, 255, 255 },
+	ALL_DARK_COLORS = {
+		{ 177 / 255, 39 / 255, 50 / 255 },
+		{ 184 / 255, 104 / 255, 41 / 255 },
+		{ 184 / 255, 169 / 255, 40 / 255 },
+		{ 48 / 255, 183 / 255, 41 / 255 },
+		{ 55 / 255, 53 / 255, 159 / 255 },
+		{ 116 / 255, 36 / 255, 143 / 255 },
 	}
+
+	ALL_LIGHT_COLORS = {
+		{ 178 / 255, 103 / 255, 109 / 255 },
+		{ 231 / 255, 131 / 255, 88 / 255 },
+		{ 192 / 255, 184 / 255, 107 / 255 },
+		{ 145 / 255, 196 / 255, 131 / 255 },
+		{ 81 / 255, 105 / 255, 160 / 255 },
+		{ 139 / 255, 115 / 255, 162 / 255 },
+	}
+
+	DARK_GRAY = { 66 / 255, 66 / 255, 66 / 255 }
+	LIGHT_GRAY = { 206 / 255, 206 / 255, 206 / 255 }
+
+	-- ALL_COLORS = ALL_DARK_COLORS
+	ALL_COLORS = ALL_LIGHT_COLORS
+	BACKGROUND_COLOR = LIGHT_GRAY
+	TEXT_COLOR = DARK_GRAY
 
 	-- Global Variables
 	Directions = { -1, 1 }
-	Colors = {
-		{ 255, 0, 0 },
-		{ 0, 0, 255 },
-	}
 	Is_Paused = false
 	-- The speed of the ball at the time of pausing
 	Pause_Speed = 0
@@ -44,10 +59,7 @@ end
 
 function love.update(dt)
 	-- Function to Auto Play the game for testing
-	-- auto_play()
-	-- Handle Pausing
-	if Is_Paused then
-	end
+	auto_play()
 	-- Move the ball based on the direction and speed
 	Ball.x = Ball.x + (Ball.direction * Ball.speed)
 	-- if your speed moved you past the edge reset it to the edge
@@ -100,6 +112,7 @@ function love.update(dt)
 end
 
 function love.draw()
+	love.graphics.setBackgroundColor(BACKGROUND_COLOR)
 	local color_count = #Colors
 	-- draw all the buckets on the screen as rectangles
 	for index, value in ipairs(Colors) do
@@ -113,7 +126,7 @@ function love.draw()
 	love.graphics.circle("fill", Ball.x, Ball.y, BALL_RADIUS)
 
 	-- draw the text on the screen
-	love.graphics.setColor(255, 255, 255)
+	love.graphics.setColor(TEXT_COLOR)
 	love.graphics.printf("Score: " .. Score, FRAME_WIDTH / 2, 0, 50, "center")
 	love.graphics.printf("Speed: " .. Ball.speed, 0, 0, 70, "center")
 
@@ -160,6 +173,17 @@ function love.keypressed(key)
 			Ball.drop = Pause_Drop
 		end
 	end
+	if key == "l" then
+		if ALL_COLORS == ALL_LIGHT_COLORS then
+			ALL_COLORS = ALL_DARK_COLORS
+			BACKGROUND_COLOR = DARK_GRAY
+			TEXT_COLOR = LIGHT_GRAY
+		else
+			ALL_COLORS = ALL_LIGHT_COLORS
+			BACKGROUND_COLOR = LIGHT_GRAY
+			TEXT_COLOR = DARK_GRAY
+		end
+	end
 end
 
 -- resets the global variables to their defaults
@@ -168,8 +192,8 @@ function reset_game()
 	Score = 0
 	Speed = START_SPEED
 	Colors = {
-		{ 255, 0, 0 },
-		{ 0, 0, 255 },
+		ALL_COLORS[1],
+		ALL_COLORS[2],
 	}
 	Ball = reset_ball()
 end

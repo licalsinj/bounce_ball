@@ -40,12 +40,11 @@ Here's how the game should play out
 - [x] Make a function that resets Ball
 - [x] Add a pause button
 - [ ] Understand how to link screen size with constants
-
 - [ ] Get New Buckets to appear in the center of the list
 
 ### Stretch Enhancements
 
-- [ ] Add more colors
+- [x] Add more colors
 - [ ] Add sounds
 - [ ] Make the background more interesting
 - [ ] Add Momentum to Falling
@@ -67,6 +66,7 @@ Here's how the game should play out
 - [x] When the ball drops close to the edge you get a game over
         even if it's the right color
         - This was caused by the speed overshooting the edge of the frame
+- [ ] Switching Color Modes mid game does not change the color of the buckets
 
 ## Colors
 
@@ -76,17 +76,17 @@ Here's how the game should play out
 - Dark Orange - #B86829
 - Dark Yellow - #B8A928
 - Dark Green - #30B729
-- Dark Blue - #1C1B55
+- Dark Blue - #37359F
 - Dark Purple - #74248F
 
 ### Light Mode
 
-- Light Red - #B3666C
-- Light Orange - #B88257
-- Light Yellow - #C0B769
-- Light Green - #50F047
-- Light Blue - #5856E6
-- Light Purple - #CD3AFF
+- Light Red - #B2676D
+- Light Orange - #E78358
+- Light Yellow - #C0B86B
+- Light Green - #91C083
+- Light Blue - #5169A0
+- Light Purple - #8B73A2
 
 - Dark Grey - #424242
 - Light Grey - #CECECE
