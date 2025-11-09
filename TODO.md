@@ -40,6 +40,7 @@ Here's how the game should play out
 - [x] Make a function that resets Ball
 - [x] Add a pause button
 - [x] Get New Buckets to appear in the center of the list
+- [ ] Figure out how to break this into smaller files. I'm getting lost in main.lua
 - [ ] Understand how to link screen size with constants
 
 ### Stretch Enhancements

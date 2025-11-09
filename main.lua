@@ -39,6 +39,7 @@ function love.load()
 	TEXT_COLOR = DARK_GRAY
 
 	-- Global Variables
+	timer = 0
 	Directions = { -1, 1 }
 	Is_Paused = false
 	-- The speed of the ball at the time of pausing
@@ -72,9 +73,58 @@ function love.load()
 
 	-- Sound Stuff
 	Border_Sound = love.audio.newSource("sound_effects/border.ogg", "static")
+	C_Sound = love.audio.newSource("sound_effects/C.ogg", "static")
+	Pitch_Index = 1
+	local base_pitch = 0.5
+	local step = 1 / 12
+	Pitch_List = {
+		base_pitch,
+		(base_pitch + base_pitch * step),
+		(base_pitch + 2 * base_pitch * step),
+		(base_pitch + 3 * base_pitch * step),
+		(base_pitch + 4 * base_pitch * step),
+		(base_pitch + 5 * base_pitch * step),
+		(base_pitch + 6 * base_pitch * step),
+		(base_pitch + 7 * base_pitch * step),
+		(base_pitch + 8 * base_pitch * step),
+		(base_pitch + 9 * base_pitch * step),
+		(base_pitch + 10 * base_pitch * step),
+		(base_pitch + 11 * base_pitch * step),
+		2 * base_pitch,
+		(2 * base_pitch + base_pitch * step),
+		(2 * base_pitch + 2 * 2 * base_pitch * step),
+		(2 * base_pitch + 3 * 2 * base_pitch * step),
+		(2 * base_pitch + 4 * 2 * base_pitch * step),
+		(2 * base_pitch + 5 * 2 * base_pitch * step),
+		(2 * base_pitch + 6 * 2 * base_pitch * step),
+		(2 * base_pitch + 7 * 2 * base_pitch * step),
+		(2 * base_pitch + 8 * 2 * base_pitch * step),
+		(2 * base_pitch + 9 * 2 * base_pitch * step),
+		(2 * base_pitch + 10 * 2 * base_pitch * step),
+		(2 * base_pitch + 11 * 2 * base_pitch * step),
+		4 * base_pitch,
+	}
+	-- Pitch_Shift = 0.25
+	for i, v in ipairs(Pitch_List) do
+		print("index: " .. i .. " value: " .. v)
+	end
 end
 
 function love.update(dt)
+	timer = timer + math.floor(dt * 100)
+	-- print("floor(dt)" .. math.floor(dt * 100))
+	-- print("Timer: " .. timer)
+	if math.floor(timer) % 150 == 0 then
+		love.audio.stop()
+		if Pitch_Index > #Pitch_List then
+			print("reset pitch")
+			Pitch_Index = 1
+		end
+		C_Sound:setPitch(Pitch_List[Pitch_Index])
+		print("getPitch: " .. C_Sound:getPitch())
+		love.audio.play(C_Sound)
+		Pitch_Index = Pitch_Index + 1
+	end
 	-- Function to Auto Play the game for testing
 	auto_play()
 	-- Move the ball based on the direction and speed
@@ -132,7 +182,6 @@ function love.update(dt)
 end
 
 function love.draw()
-	love.audio.play(Border_Sound)
 	love.graphics.setBackgroundColor(BACKGROUND_COLOR)
 	local color_count = #Colors
 	-- draw all the buckets on the screen as rectangles
