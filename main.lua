@@ -193,10 +193,35 @@ function love.keypressed(key)
 			ALL_COLORS = ALL_DARK_COLORS
 			BACKGROUND_COLOR = DARK_GRAY
 			TEXT_COLOR = LIGHT_GRAY
+			Colors = transform_colors(ALL_LIGHT_COLORS)
 		else
 			ALL_COLORS = ALL_LIGHT_COLORS
 			BACKGROUND_COLOR = LIGHT_GRAY
 			TEXT_COLOR = DARK_GRAY
+			Colors = transform_colors(ALL_DARK_COLORS)
+		end
+	end
+end
+
+-- rebuilds colors to have the new ALL_COLORS values
+-- old_list will be light if we're switching *TO* dark
+function transform_colors(old_list)
+	-- make a new temp value to return
+	local new_colors = {}
+	-- for each value in Colors currently
+	for index, color in ipairs(Colors) do
+		-- we find the index of that color inside old_list
+		old_color_index = get_index_of(old_list, color)
+		-- we then insert that old color's value at the index we're on into new_colors
+		table.insert(new_colors, index, ALL_COLORS[old_color_index])
+	end
+	return new_colors
+end
+
+function get_index_of(list, val)
+	for index, value in ipairs(list) do
+		if value == val then
+			return index
 		end
 	end
 end

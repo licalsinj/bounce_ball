@@ -67,7 +67,7 @@ Here's how the game should play out
 - [x] When the ball drops close to the edge you get a game over
         even if it's the right color
         - This was caused by the speed overshooting the edge of the frame
-- [ ] Switching Color Modes mid game does not change the color of the buckets
+- [x] Switching Color Modes mid game does not change the color of the buckets
 
 ## Colors
 
