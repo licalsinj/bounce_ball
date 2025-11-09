@@ -78,19 +78,19 @@ function love.load()
 	local base_pitch = 0.5
 	local step = 1 / 12
 	Pitch_List = {
-		base_pitch,
-		(base_pitch + base_pitch * step),
-		(base_pitch + 2 * base_pitch * step),
-		(base_pitch + 3 * base_pitch * step),
-		(base_pitch + 4 * base_pitch * step),
-		(base_pitch + 5 * base_pitch * step),
-		(base_pitch + 6 * base_pitch * step),
-		(base_pitch + 7 * base_pitch * step),
-		(base_pitch + 8 * base_pitch * step),
-		(base_pitch + 9 * base_pitch * step),
-		(base_pitch + 10 * base_pitch * step),
-		(base_pitch + 11 * base_pitch * step),
-		2 * base_pitch,
+		base_pitch, -- C  1
+		(base_pitch + base_pitch * step), -- C# 2
+		(base_pitch + 2 * base_pitch * step), -- D  3
+		(base_pitch + 3 * base_pitch * step), -- D# 4
+		(base_pitch + 4 * base_pitch * step), -- E  5
+		(base_pitch + 5 * base_pitch * step), -- F  6
+		(base_pitch + 6 * base_pitch * step), -- F# 7
+		(base_pitch + 7 * base_pitch * step), -- G  8
+		(base_pitch + 8 * base_pitch * step), -- G# 9
+		(base_pitch + 9 * base_pitch * step), -- A  10
+		(base_pitch + 10 * base_pitch * step), -- A# 11
+		(base_pitch + 11 * base_pitch * step), -- B  12
+		2 * base_pitch, -- C  13
 		(2 * base_pitch + base_pitch * step),
 		(2 * base_pitch + 2 * 2 * base_pitch * step),
 		(2 * base_pitch + 3 * 2 * base_pitch * step),
@@ -108,22 +108,30 @@ function love.load()
 	for i, v in ipairs(Pitch_List) do
 		print("index: " .. i .. " value: " .. v)
 	end
+	Major_Scale = { 1, 3, 5, 6, 8, 10, 12, 13 }
+	Minor_Scale = { 1, 3, 4, 6, 8, 9, 11, 13 }
+	Blues_Scale = { 1, 4, 6, 7, 8, 11, 12, 13 } -- minor blues scale
+	Current_Scale = Minor_Scale
+	Scale_Index = 1
+	Scale_Direction = 1
+	Octave = 2
 end
 
 function love.update(dt)
 	timer = timer + math.floor(dt * 100)
 	-- print("floor(dt)" .. math.floor(dt * 100))
 	-- print("Timer: " .. timer)
-	if math.floor(timer) % 150 == 0 then
+	if math.floor(timer) % 50 == 0 then
+		print("Scale_Index: " .. Scale_Index)
 		love.audio.stop()
-		if Pitch_Index > #Pitch_List then
-			print("reset pitch")
-			Pitch_Index = 1
-		end
-		C_Sound:setPitch(Pitch_List[Pitch_Index])
+		C_Sound:setPitch(Pitch_List[Current_Scale[Scale_Index] + ((Octave - 1) * 12)])
 		print("getPitch: " .. C_Sound:getPitch())
 		love.audio.play(C_Sound)
-		Pitch_Index = Pitch_Index + 1
+		Scale_Index = Scale_Index + Scale_Direction
+		if Scale_Index > #Current_Scale or Scale_Index == 0 then
+			Scale_Direction = Scale_Direction * -1
+			Scale_Index = Scale_Index + Scale_Direction * 2
+		end
 	end
 	-- Function to Auto Play the game for testing
 	auto_play()
