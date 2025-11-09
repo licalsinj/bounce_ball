@@ -69,6 +69,9 @@ function love.load()
   ]]
 	--
 	Ball = reset_ball()
+
+	-- Sound Stuff
+	Border_Sound = love.audio.newSource("sound_effects/border.ogg", "static")
 end
 
 function love.update(dt)
@@ -129,6 +132,7 @@ function love.update(dt)
 end
 
 function love.draw()
+	love.audio.play(Border_Sound)
 	love.graphics.setBackgroundColor(BACKGROUND_COLOR)
 	local color_count = #Colors
 	-- draw all the buckets on the screen as rectangles
