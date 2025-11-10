@@ -3,7 +3,7 @@
 -- love.load Runs once on start up
 function love.load()
 	-- Global Constants
-	MAX_SPEED = 30
+	MAX_SPEED = 30 -- this can't exceed bucket's smallest width
 	START_SPEED = 2
 	START_Y = 50
 	BALL_RADIUS = 20
@@ -39,7 +39,8 @@ function love.load()
 	TEXT_COLOR = DARK_GRAY
 
 	-- Global Variables
-	timer = 0
+	Is_Auto_Play = true
+	-- timer = 0
 	Directions = { -1, 1 }
 	Is_Paused = false
 	-- The speed of the ball at the time of pausing
@@ -59,6 +60,7 @@ function love.load()
 		{ 2, 2 },
 		{ 6, 6 },
 	}
+	Sound_Index = 0
 	-- Things that should reset to a default
 	reset_game()
 	--[[ 
@@ -120,7 +122,7 @@ function love.load()
 end
 
 function love.update(dt)
-	timer = timer + math.floor(dt * 100)
+	--[[ timer = timer + math.floor(dt * 100)
 	-- print("floor(dt)" .. math.floor(dt * 100))
 	-- print("Timer: " .. timer)
 	if math.floor(timer) % 50 == 0 then
@@ -139,9 +141,13 @@ function love.update(dt)
 				Scale_Index = Scale_Index + Scale_Direction * 2
 			end
 		end
-	end
+	end ]]
+	--
+
 	-- Function to Auto Play the game for testing
-	auto_play()
+	if Is_Auto_Play then
+		auto_play()
+	end
 	-- Move the ball based on the direction and speed
 	Ball.x = Ball.x + (Ball.direction * Ball.speed)
 	-- if your speed moved you past the edge reset it to the edge
@@ -193,6 +199,15 @@ function love.update(dt)
 	-- If the ball hits a wall then turn it around
 	if Ball.x >= (FRAME_WIDTH - BALL_RADIUS) or Ball.x <= BALL_RADIUS then
 		Ball.direction = Ball.direction * -1
+	end
+
+	local new_sound_index = math.ceil(Ball.x / (FRAME_WIDTH / #Colors))
+	if new_sound_index ~= Sound_Index then
+		print("new Sound_Index: " .. new_sound_index)
+		print("Sound_Index: " .. Sound_Index)
+		love.audio.stop()
+		love.audio.play(C_Sound)
+		Sound_Index = new_sound_index
 	end
 end
 
@@ -269,6 +284,9 @@ function love.keypressed(key)
 			Colors = transform_colors(ALL_DARK_COLORS)
 		end
 	end
+	if key == "a" then
+		Is_Auto_Play = not Is_Auto_Play
+	end
 end
 
 -- rebuilds colors to have the new ALL_COLORS values
@@ -321,6 +339,7 @@ end
 
 -- creates a new ball to be sorted
 function generate_ball()
+	Sound_Index = 0 -- math.ceil((FRAME_WIDTH / 2) / (FRAME_WIDTH / #Colors))
 	return {
 		x = FRAME_WIDTH / 2,
 		y = START_Y,
