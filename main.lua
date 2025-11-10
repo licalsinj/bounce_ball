@@ -76,6 +76,7 @@ function love.load()
 	-- Sound Stuff
 	C_Sound = love.audio.newSource("sound_effects/border.ogg", "static")
 	Border_Sound = love.audio.newSource("sound_effects/C.ogg", "static")
+	New_Ball = love.audio.newSource("sound_effects/new_ball.mp3", "static")
 	Pitch_Index = 1
 	local base_pitch = 0.5
 	local step = 1 / 12
@@ -205,8 +206,10 @@ function love.update(dt)
 	if new_sound_index ~= Sound_Index then
 		print("new Sound_Index: " .. new_sound_index)
 		print("Sound_Index: " .. Sound_Index)
-		love.audio.stop()
-		love.audio.play(C_Sound)
+		if Sound_Index ~= 0 then
+			love.audio.stop()
+			love.audio.play(C_Sound)
+		end
 		Sound_Index = new_sound_index
 	end
 end
@@ -339,7 +342,8 @@ end
 
 -- creates a new ball to be sorted
 function generate_ball()
-	Sound_Index = 0 -- math.ceil((FRAME_WIDTH / 2) / (FRAME_WIDTH / #Colors))
+	love.audio.play(New_Ball)
+	Sound_Index = 0
 	return {
 		x = FRAME_WIDTH / 2,
 		y = START_Y,
