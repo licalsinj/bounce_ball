@@ -43,6 +43,18 @@ Here's how the game should play out
 - [x] Figure out how to break this into smaller files. I'm getting lost in main.lua
 - [ ] Understand how to link screen size with constants
 
+### Add Sounds
+
+This is big enhancement so I'm breaking it up into sub tasks:
+
+- [x] Get sounds to play
+- [ ] Get sound to play when bounces off walls
+  - Probably want this to be based on change in direction
+- [ ] Get new ball sound to ALWAYS play
+- [ ] Get different notes to play depending on which border/region it's hovering over
+  - Border and region are two different ideas. I think I want the note associated with the border not the region
+  - However that might mess with the xylophone effect
+
 ### Stretch Enhancements
 
 - [x] Add more colors
@@ -58,6 +70,7 @@ Here's how the game should play out
 - [ ] Splash Screen
 - [ ] Improve Game Over and Pause images
 - [ ] Menu Options
+- [ ] Save high score
 
 ## Bugs
 
