@@ -85,7 +85,7 @@ function love.update(dt)
 		print("Sound_Index: " .. Sound_Index)
 		if Sound_Index ~= 0 then
 			love.audio.stop()
-			love.audio.play(C_Sound)
+			love.audio.play(Sound.Source.C_Sound)
 		end
 		Sound_Index = new_sound_index
 	end
@@ -93,7 +93,7 @@ end
 
 -- creates a new ball to be sorted
 function generate_ball()
-	love.audio.play(New_Ball)
+	love.audio.play(Sound.Source.New_Ball)
 	Sound_Index = 0
 	return {
 		x = CONST.FRAME_WIDTH / 2,
