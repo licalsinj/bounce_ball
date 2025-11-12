@@ -6,6 +6,10 @@ A simple one button game where
 a colored ball has to be sorted
 into different colored buckets.
 
+## Personal Goals
+
+Complete a game dev cycle and deploy a simple but finished game.
+
 ## Game Cycle
 
 Here's how the game should play out
@@ -36,12 +40,22 @@ Here's how the game should play out
 - [x] Make a ball go a random direction
 - [x] Create buckets/columns for the ball to land in
 - [x] Check if the ball landed in the right color bucket
+- [x] Add more colored buckets at the bottom
 - [x] Add some useful comments
 - [x] Make a function that resets Ball
 - [x] Add a pause button
 - [x] Get New Buckets to appear in the center of the list
 - [x] Figure out how to break this into smaller files. I'm getting lost in main.lua
+- [x] Add a Dark Mode
 - [ ] Understand how to link screen size with constants
+- [ ] Add sounds
+- [ ] Enable it to work with a mouse and touch
+  - Left click is drop unless you hit the pause button.
+- [ ] Store and save high scores
+- [ ] Splash Screen
+- [ ] Improve Game Over and Pause images
+- [ ] Add background music
+- [ ] Menu Options
 
 ### Add Sounds
 
@@ -55,22 +69,27 @@ This is big enhancement so I'm breaking it up into sub tasks:
   - Border and region are two different ideas. I think I want the note associated with the border not the region
   - However that might mess with the xylophone effect
 
-### Stretch Enhancements
+### Menu Options
 
-- [x] Add more colors
-- [ ] Add sounds
-- [ ] Make the background more interesting
+This is a big enhancement so I'm breaking it up into sub tasks:
+
+- [ ] Set Light/Dark Mode
+- [ ] Quit/Reset mid game
+- [ ] Sound management
+  - Toggle Background music
+  - Toggle Sound Effects
+  - Volume level of BG music
+  - Volume Level of Sound Effects
+
+## NOT Doing
+
+- [ ] Make the background more interesting with shaders
 - [ ] Add Momentum to Falling
-- [ ] Enable it to work with a mouse
-  - Left click is drop unless you hit the pause button.
-- [ ] Store and save high scores
 - [ ] Make the point system more complex
   - Like you lose points for bouncing off the walls or crossing boundaries unnecessarily?
 - [ ] Customize Colors and Sounds?
-- [ ] Splash Screen
-- [ ] Improve Game Over and Pause images
-- [ ] Menu Options
-- [ ] Save high score
+- [ ] Add more color modes
+- [ ] Add custom art to balls/buckets/background
 
 ## Bugs
 
