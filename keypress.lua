@@ -61,7 +61,7 @@ end
 -- resets the ball to its defaults
 -- TODO: This could probably be a method on a ball object
 function reset_ball()
-	return {
+	result_ball = {
 		x = CONST.FRAME_WIDTH / 2,
 		y = CONST.START_Y,
 		speed = Speed,
@@ -69,6 +69,8 @@ function reset_ball()
 		drop = false,
 		color_index = love.math.random(1, #Colors),
 	}
+	Old_Direction = result_ball.direction
+	return result_ball
 end
 
 -- rebuilds colors to have the new ALL_COLORS values

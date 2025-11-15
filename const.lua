@@ -1,15 +1,15 @@
 -- All the global variables used in this program
 -- Global Constants
 CONST = {
-	MAX_SPEED = 30, -- this can't exceed bucket's smallest width
+	MAX_SPEED = 20, -- this can't exceed bucket's smallest width
 	START_SPEED = 2,
 	START_Y = 50,
 	BALL_RADIUS = 20,
 	FALL_SPEED = 20,
 	BUCKET_HEIGHT = 80,
 	-- TODO: Make these actually be used to create the screen
-	FRAME_WIDTH = 630,
-	FRAME_HEIGHT = 720,
+	FRAME_WIDTH = CONF.WINDOW_WIDTH,
+	FRAME_HEIGHT = CONF.WINDOW_HEIGHT,
 	ALL_DARK_COLORS = {
 		{ 177 / 255, 39 / 255, 50 / 255 },
 		{ 184 / 255, 104 / 255, 41 / 255 },

@@ -47,7 +47,7 @@ Here's how the game should play out
 - [x] Get New Buckets to appear in the center of the list
 - [x] Figure out how to break this into smaller files. I'm getting lost in main.lua
 - [x] Add a Dark Mode
-- [ ] Understand how to link screen size with constants
+- [x] Understand how to link screen size with constants
 - [ ] Add sounds
 - [ ] Enable it to work with a mouse and touch
   - Left click is drop unless you hit the pause button.
@@ -62,12 +62,13 @@ Here's how the game should play out
 This is big enhancement so I'm breaking it up into sub tasks:
 
 - [x] Get sounds to play
-- [ ] Get sound to play when bounces off walls
+- [x] Get sound to play when bounces off walls
   - Probably want this to be based on change in direction
 - [ ] Get new ball sound to ALWAYS play
 - [ ] Get different notes to play depending on which border/region it's hovering over
   - Border and region are two different ideas. I think I want the note associated with the border not the region
   - However that might mess with the xylophone effect
+  - This is implemented poorly right now. Needs a second/closer look!
 
 ### Menu Options
 
@@ -83,13 +84,13 @@ This is a big enhancement so I'm breaking it up into sub tasks:
 
 ## NOT Doing
 
-- [ ] Make the background more interesting with shaders
-- [ ] Add Momentum to Falling
-- [ ] Make the point system more complex
+- Make the background more interesting with shaders
+- Add Momentum to Falling
+- Make the point system more complex
   - Like you lose points for bouncing off the walls or crossing boundaries unnecessarily?
-- [ ] Customize Colors and Sounds?
-- [ ] Add more color modes
-- [ ] Add custom art to balls/buckets/background
+- Customize Colors and Sounds?
+- Add more color modes
+- Add custom art to balls/buckets/background
 
 ## Bugs
 

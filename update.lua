@@ -1,27 +1,5 @@
 -- the standard love2d update method
 function love.update(dt)
-	--[[ timer = timer + math.floor(dt * 100)
-	-- print("floor(dt)" .. math.floor(dt * 100))
-	-- print("Timer: " .. timer)
-	if math.floor(timer) % 50 == 0 then
-		print("Scale_Index: " .. Scale_Index)
-		love.audio.stop()
-		C_Sound:setPitch(Pitch_List[Current_Scale[Scale_Index] + ((Octave - 1) * 12)] + Pitch_Adjustment)
-		print("getPitch: " .. C_Sound:getPitch())
-		love.audio.play(C_Sound)
-		if Repeat < Repeat_Count then
-			Repeat = Repeat + 1
-		else
-			Repeat = 1
-			Scale_Index = Scale_Index + Scale_Direction
-			if Scale_Index > #Current_Scale or Scale_Index == 0 then
-				Scale_Direction = Scale_Direction * -1
-				Scale_Index = Scale_Index + Scale_Direction * 2
-			end
-		end
-	end ]]
-	--
-
 	-- Function to Auto Play the game for testing
 	if Is_Auto_Play then
 		auto_play()
@@ -56,13 +34,12 @@ function love.update(dt)
 					Speed = Speed + 1
 				end
 				-- if we've gotten to half max speed add a color and reduce speed
-				-- TODO: Fix this. It's not adding in more than a 3rd color
-				if Speed >= CONST.MAX_SPEED / 2 and #Colors < #CONST.ALL_COLORS then
+				if Speed >= CONST.MAX_SPEED * 3 / 4 and #Colors < #CONST.ALL_COLORS then
 					-- table.insert(Colors, ALL_COLORS[#Colors + 1])
 					-- Insert the Color at index Add_Order[Add_Order_Index] into Colors
 					table.insert(Colors, Add_Order[Add_Order_Index][1], CONST.ALL_COLORS[Add_Order[Add_Order_Index][2]])
 					Add_Order_Index = Add_Order_Index + 1
-					Speed = math.floor(Speed / 2)
+					Speed = math.floor(Speed / 3)
 				end
 				-- generate a new ball to be sorted
 				Ball = generate_ball()
@@ -81,13 +58,28 @@ function love.update(dt)
 
 	local new_sound_index = math.ceil(Ball.x / (CONST.FRAME_WIDTH / #Colors))
 	if new_sound_index ~= Sound_Index then
-		print("new Sound_Index: " .. new_sound_index)
-		print("Sound_Index: " .. Sound_Index)
 		if Sound_Index ~= 0 then
-			love.audio.stop()
+			-- print("Current Scale Index: " .. new_sound_index)
+			Sound.Source.C_Sound:setPitch(Sound.Current_Scale[new_sound_index])
 			love.audio.play(Sound.Source.C_Sound)
 		end
 		Sound_Index = new_sound_index
+	end
+
+	-- Test if the direction has changed
+	-- if it has changed make sure it's not because it dropped
+	if Old_Direction ~= Ball.direction and Ball.direction ~= 0 then
+		print("Current Scale Index: " .. #Sound.Current_Scale)
+		if Ball.direction == -1 then
+			print("Pitch before set: " .. Sound.Source.C_Sound:getPitch())
+			Sound.Source.C_Sound:setPitch(Sound.Current_Scale[1])
+			print("Pitch after set: " .. Sound.Source.C_Sound:getPitch())
+			love.audio.play(Sound.Source.C_Sound)
+		else
+			Sound.Source.C_Sound:setPitch(Sound.Current_Scale[8])
+			love.audio.play(Sound.Source.C_Sound)
+		end
+		Old_Direction = Ball.direction
 	end
 end
 
@@ -95,7 +87,7 @@ end
 function generate_ball()
 	love.audio.play(Sound.Source.New_Ball)
 	Sound_Index = 0
-	return {
+	result_ball = {
 		x = CONST.FRAME_WIDTH / 2,
 		y = CONST.START_Y,
 		speed = Speed,
@@ -103,6 +95,8 @@ function generate_ball()
 		drop = false,
 		color_index = math.random(1, #Colors),
 	}
+	Old_Direction = result_ball.direction
+	return result_ball
 end
 
 -- tests if a point/ball is within the bucket/rect's width

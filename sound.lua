@@ -5,7 +5,6 @@ Sound = {
 	-- Sound Stuff
 	Source = {
 		C_Sound = love.audio.newSource("sound_effects/border.ogg", "static"),
-		Border_Sound = love.audio.newSource("sound_effects/C.ogg", "static"),
 		New_Ball = love.audio.newSource("sound_effects/new_ball.mp3", "static"),
 	},
 	Pitch_Index = 1,
@@ -47,6 +46,6 @@ Sound.Pitch_List = {
 	(2 * base_pitch + 11 * 2 * base_pitch * step) - 0.0025 * 12, -- B
 	4 * base_pitch,
 }
-Sound.Current_Scale = Sound.Blues_Scale
+Sound.Current_Scale = Sound.Major_Scale
 
 return Sound

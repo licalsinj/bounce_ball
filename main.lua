@@ -2,6 +2,7 @@
 
 -- love.load Runs once on start up
 function love.load()
+	CONF = require("conf")
 	Sound = require("sound")
 	CONST = require("const")
 	require("update")
@@ -34,4 +35,6 @@ function love.load()
 	-- Setup The Game using Defaults
 	reset_game()
 	Ball = reset_ball()
+	-- Used to track whether or not the ball has bounced off a wall
+	Old_Direction = Ball.direction
 end
